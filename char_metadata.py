@@ -105,13 +105,29 @@ def load_unihan_database(data_dir: str = "data") -> Dict[str, Dict[str, str]]:
     
     # If Unihan.zip exists but not extracted, extract it
     zip_path = data_path / "Unihan.zip"
-    if zip_path.exists() and not unihan_dir.exists():
-        import zipfile
-        print(f"Extracting {zip_path}...")
-        with zipfile.ZipFile(zip_path, 'r') as zip_ref:
-            zip_ref.extractall(data_path)
+    if zip_path.exists():
+        # Check if files are already extracted directly in data/ or in Unihan/ subdirectory
+        has_unihan_dir = unihan_dir.exists()
+        has_files_directly = any(data_path.glob("Unihan_*.txt"))
+        
+        if not has_unihan_dir and not has_files_directly:
+            import zipfile
+            print(f"Extracting {zip_path}...")
+            with zipfile.ZipFile(zip_path, 'r') as zip_ref:
+                zip_ref.extractall(data_path)
+        elif has_files_directly and not has_unihan_dir:
+            # Files are in data/ directly, create Unihan/ and move them
+            print("Organizing Unihan files into Unihan/ subdirectory...")
+            unihan_dir.mkdir(exist_ok=True)
+            for unihan_file in data_path.glob("Unihan_*.txt"):
+                unihan_file.rename(unihan_dir / unihan_file.name)
     
-    if not unihan_dir.exists():
+    # Check for Unihan files in either location
+    if unihan_dir.exists():
+        search_dir = unihan_dir
+    elif any(data_path.glob("Unihan_*.txt")):
+        search_dir = data_path
+    else:
         print("Unihan directory not found. Please download Unihan data first.")
         return {}
     
@@ -127,7 +143,7 @@ def load_unihan_database(data_dir: str = "data") -> Dict[str, Dict[str, str]]:
     ]
     
     for filename in files_to_parse:
-        file_path = unihan_dir / filename
+        file_path = search_dir / filename
         if file_path.exists():
             file_data = parse_unihan_file(file_path)
             # Merge into main dictionary

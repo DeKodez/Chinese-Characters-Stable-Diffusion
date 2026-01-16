@@ -136,8 +136,16 @@ def build_training_dataset(
             caption = generate_caption(char, metadata)
             
             # Create training entry
+            # Use relative path if possible, otherwise use absolute path
+            try:
+                rel_path = image_path.relative_to(Path.cwd())
+                image_path_str = str(rel_path)
+            except ValueError:
+                # If not relative, use absolute path
+                image_path_str = str(image_path)
+            
             entry = {
-                "image_path": str(image_path.relative_to(Path.cwd())),
+                "image_path": image_path_str,
                 "character": char,
                 "codepoint": unicode_code,
                 "caption": caption
@@ -145,10 +153,16 @@ def build_training_dataset(
             
             # Add metadata fields if available
             if metadata:
+                # Ensure values are strings (metadata can have Union[str, List[str]] types)
+                def to_str(value):
+                    if isinstance(value, list):
+                        return ", ".join(str(v) for v in value)
+                    return str(value) if value is not None else ""
+                
                 entry.update({
-                    "definition": metadata.get("definition_en", ""),
-                    "pinyin": metadata.get("mandarin_pinyin", ""),
-                    "stroke_count": metadata.get("stroke_count", ""),
+                    "definition": to_str(metadata.get("definition_en", "")),
+                    "pinyin": to_str(metadata.get("mandarin_pinyin", "")),
+                    "stroke_count": to_str(metadata.get("stroke_count", "")),
                 })
             else:
                 missing_metadata_count += 1
@@ -159,7 +173,10 @@ def build_training_dataset(
             if generated_count % 1000 == 0:
                 print(f"  Processed {generated_count} entries...")
         
-        except (ValueError, OverflowError):
+        except (ValueError, OverflowError) as e:
+            # Log unexpected errors for debugging
+            if isinstance(e, ValueError) and "relative_to" not in str(e):
+                print(f"Warning: Error processing U+{code_point:04X}: {e}")
             continue
     
     # Step 4: Save JSONL file

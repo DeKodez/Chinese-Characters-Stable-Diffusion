@@ -42,9 +42,11 @@ python char_metadata.py
 
 This downloads Unihan and CC-CEDICT (if needed), merges them, and saves to `data/char_metadata.json`.
 
+**Note:** You can run this manually, but `build_training_dataset.py` will automatically generate metadata if it doesn't exist.
+
 ### `build_training_dataset.py`
 
-Combines character images with metadata to create a training dataset in JSONL format. Each entry contains an image path and a caption with character information.
+Combines character images with metadata to create a training dataset in JSONL format. Automatically generates metadata and images if they don't exist.
 
 **Usage:**
 ```bash
@@ -61,7 +63,10 @@ Creates a JSONL file with entries like:
   "image_path": "char_images/U+4E00_一.png",
   "character": "一",
   "codepoint": "U+4E00",
-  "caption": "Chinese character 一 (U+4E00), meaning 'one; a, an; alone', pronounced 'yī'"
+  "caption": "Chinese character 一 (U+4E00), meaning 'one; a, an; alone', pronounced 'yī', stroke count: 1",
+  "definition": "one; a, an; alone",
+  "pinyin": "yī",
+  "stroke_count": "1"
 }
 ```
 
