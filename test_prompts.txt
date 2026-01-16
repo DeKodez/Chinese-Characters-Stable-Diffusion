@@ -1,0 +1,44 @@
+# Test Prompts for Chinese Character Generation
+# Compare outputs between original Stable Diffusion and fine-tuned model
+
+## Existing
+# Test if the model can reacreate existing characters
+
+Chinese character meaning "love", traditional calligraphy style
+Chinese ideograph for "water", flowing brush strokes
+Chinese character meaning "mountain", bold and strong strokes
+Chinese character for "fire", dynamic and energetic strokes
+Chinese character meaning "peace", calm and balanced composition
+Chinese ideograph for "dragon", powerful and majestic
+Chinese character meaning "wisdom", elegant and refined
+Chinese character for "light", bright and clear strokes
+Chinese ideograph meaning "eternity", continuous flowing lines
+Chinese character for "harmony", balanced and symmetrical
+
+## Combining ideas
+# Test if the model can create characters that combine 2 ideas
+
+Generate a Chinese character that combines the concepts of "fire" and "dog"
+Generate a Chinese character that combines the concepts of "steel" and "man"
+Generate a Chinese character that combines the concepts of "hidden" and "war"
+Generate a Chinese character that combines the concepts of "old" and "new"
+Generate a Chinese character that combines the concepts of "one" and "person"
+
+
+## Creative/Novel Character Generation
+# Test ability to generate new characters
+
+Create a Chinese ideograph representing "digital age" or "technology"
+Generate a Chinese character for the Loch Ness Monster
+Generate a Chinese character for Baba Yaga
+Generate a Chinese character for the islamic concept of Tawhid or the oneness of God
+Generate a Chinese character for the city of Pittsburgh
+
+
+## Negative Prompt Ideas
+# Things to avoid in generation
+
+blurry, distorted, low quality, watermark, text, multiple characters, 
+non-Chinese characters, Latin letters, numbers, decorative elements,
+background patterns, noise, artifacts, incomplete strokes, 
+broken lines, overlapping unrelated characters
