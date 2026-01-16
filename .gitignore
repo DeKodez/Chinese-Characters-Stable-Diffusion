@@ -17,10 +17,17 @@ checkpoints/
 
 # Generated images
 char_images/
+test_char_images/
 *.png
 *.jpg
 *.jpeg
 !example_char.png
+
+# Data files
+data/
+*.jsonl
+training_dataset.jsonl
+test_training_dataset.jsonl
 
 # IDE
 .vscode/
