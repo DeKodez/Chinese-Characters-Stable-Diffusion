@@ -98,7 +98,7 @@ def main():
     parser.add_argument("--dataset_path", type=str, required=True, help="Path to JSONL dataset file")
     parser.add_argument("--images_dir", type=str, required=True, help="Directory containing character images")
     parser.add_argument("--output_dir", type=str, default="./lora_checkpoints", help="Output directory for checkpoints")
-    parser.add_argument("--pretrained_model", type=str, default="runwayml/stable-diffusion-v1-5", help="Base model")
+    parser.add_argument("--pretrained_model", type=str, default="stable-diffusion-v1-5/stable-diffusion-v1-5", help="Base model")
     parser.add_argument("--resolution", type=int, default=512, help="Image resolution")
     parser.add_argument("--train_batch_size", type=int, default=4, help="Training batch size")
     parser.add_argument("--gradient_accumulation_steps", type=int, default=1, help="Gradient accumulation steps")
